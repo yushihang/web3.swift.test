@@ -98,7 +98,7 @@ class Web3ViewModel: ObservableObject {
     
     func readFromContractFunction() async -> String? {
         
-        guard let contractAddress = try? EthereumAddress(hex: "0xBA36c729E35845C0BF3283d2a13c0FEF616E6B12", eip55: true) else {
+        guard let contractAddress = try? EthereumAddress(hex: "0xE0257FCAA7fA719781c3B4329972E9Be9006c059", eip55: true) else {
             return nil
         }
         
@@ -113,13 +113,13 @@ class Web3ViewModel: ObservableObject {
         print("contract.methods.count: \(contract.methods.count)")
         
       
-        guard let contractFunc = contract["getGISTRootHistoryLength"] else {
+        guard let contractFunc = contract["getGISTProof"] else {
             return nil
         }
         
         let holderDIDBigIntString:BigUInt = BigUInt(stringLiteral: "123")
         
-        contractFunc().call { data, error in
+        contractFunc(holderDIDBigIntString).call { data, error in
             print(data)
         }
         /*
