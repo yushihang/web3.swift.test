@@ -95,5 +95,71 @@ class Web3ViewModel: ObservableObject {
             }
         }
     }
+    
+    func readFromContractFunction() async -> String? {
+        
+        guard let contractAddress = try? EthereumAddress(hex: "0xBA36c729E35845C0BF3283d2a13c0FEF616E6B12", eip55: true) else {
+            return nil
+        }
+        
+        guard let data = abiJson.data(using: .utf8) else {
+            return nil
+        }
+        
+        guard let contract = try? web3.eth.Contract(json: data, abiKey: "abi", address: contractAddress) else {
+            return nil
+        }
+        
+        print("contract.methods.count: \(contract.methods.count)")
+        
+      
+        guard let contractFunc = contract["getGISTRootHistoryLength"] else {
+            return nil
+        }
+        
+        let holderDIDBigIntString:BigUInt = BigUInt(stringLiteral: "123")
+        
+        contractFunc().call { data, error in
+            print(data)
+        }
+        /*
+
+        guard let call = contractFunc().createCall() else {
+            return nil
+        }
+   
+        guard let contractFunc = contract["getGISTRootHistoryLength"] else {
+            return nil
+        }
+         
+        
+  
+    
+        web3.eth.call(call: call, block: .latest){ response in
+            switch response.status {
+            case .success(let result):
+                print(result)
+            case .failure(let error):
+                print("\(#file):\(#line) \(error)")
+            }
+        }
+         */
+        /*
+        contract.call
+
+        return try? await withCheckedThrowingContinuation { continuation in
+            web3.net.peerCount { result in
+                switch result.status {
+                case .success(let count):
+                    continuation.resume(returning: count.quantity)
+                case .failure(let error):
+                    print("\(#file):\(#line) \(error)")
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+         */
+        return ""
+    }
 
 }

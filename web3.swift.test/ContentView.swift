@@ -19,6 +19,8 @@ struct ContentView: View {
     
     @State var txhash = ""
     
+    @State var readContractFunctionResult = ""
+    
     
     var versionNode: some View {
         Group{
@@ -79,8 +81,18 @@ struct ContentView: View {
     }
     
     
-    var callContractFunctionNode: some View {
-        
+    var readFromContractFunctionNode: some View {
+        Group{
+            Button {
+                Task{
+                    txhash = await viewModel.readFromContractFunction() ?? "Error"
+                }
+            } label: {
+                Text("Read Data from Contract Functions")
+            }
+            
+            Text("result: \(readContractFunctionResult)")
+        }
     }
     var body: some View {
         VStack(spacing:20) {
@@ -92,6 +104,8 @@ struct ContentView: View {
             peerCountNode
             
             signAndSendTxNode
+            
+            readFromContractFunctionNode
             
             Spacer()
 
