@@ -78,6 +78,10 @@ struct ContentView: View {
         }
     }
     
+    
+    var callContractFunctionNode: some View {
+        
+    }
     var body: some View {
         VStack(spacing:20) {
         
