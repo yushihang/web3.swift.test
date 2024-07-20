@@ -98,6 +98,8 @@ class Web3ViewModel: ObservableObject {
     
     func readFromContractFunction() async -> String? {
         
+     
+        
         guard let contractAddress = try? EthereumAddress(hex: "0xE0257FCAA7fA719781c3B4329972E9Be9006c059", eip55: true) else {
             return nil
         }
@@ -118,10 +120,30 @@ class Web3ViewModel: ObservableObject {
         }
         
         let holderDIDBigIntString:BigUInt = BigUInt(stringLiteral: "123")
-        
-        contractFunc(holderDIDBigIntString).call { data, error in
-            print(data)
+
+    
+        return try? await withCheckedThrowingContinuation { continuation in
+            contractFunc(holderDIDBigIntString).call { data, error in
+                print("data: \(data ?? [:] )")
+                if let error {
+                    print("\(#file):\(#line) \(error)")
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let data else {
+                    print("\(#file):\(#line) data is nil")
+                    continuation.resume(returning: nil)
+                    return
+                }
+                
+
+                continuation.resume(returning: String(describing: data))
+                
+                
+            }
         }
+        
         /*
 
         guard let call = contractFunc().createCall() else {
@@ -159,7 +181,10 @@ class Web3ViewModel: ObservableObject {
             }
         }
          */
-        return ""
+
     }
+    
+    
+    
 
 }

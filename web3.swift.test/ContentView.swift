@@ -85,7 +85,7 @@ struct ContentView: View {
         Group{
             Button {
                 Task{
-                    txhash = await viewModel.readFromContractFunction() ?? "Error"
+                    readContractFunctionResult = await viewModel.readFromContractFunction() ?? "Error"
                 }
             } label: {
                 Text("Read Data from Contract Functions")
