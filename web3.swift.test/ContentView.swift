@@ -87,7 +87,7 @@ struct ContentView: View {
                 Text("Get Balance of Specified Account")
             }
             
-            Text("balance: \(balance)")
+            Text("balance: \(String(describing: balance))")
         }
     }
     
