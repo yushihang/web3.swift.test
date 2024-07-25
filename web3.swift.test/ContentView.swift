@@ -98,6 +98,7 @@ struct ContentView: View {
                     txHash = await viewModel.signAndSendTx(amount: 12345, toHex: otherAddress) ?? "Error"
                     
                     balance = await viewModel.getBalance(hex: otherAddress) ?? BigUInt()
+                    txHashCheckResult = await viewModel.checkTxHashHex(txHash: txHash) ?? "Error"
                 }
             } label: {
                 Text("Sign & Send Tx")
@@ -141,6 +142,7 @@ struct ContentView: View {
             Button {
                 Task{
                     writeContractFunctionTxHash = await viewModel.writeToContractFunction() ?? "Error"
+                    writeContractFunctionTxHashCheckResult = await viewModel.checkTxHashHex(txHash: writeContractFunctionTxHash) ?? "Error"
                 }
             } label: {
                 Text("write To Contract Functions")
