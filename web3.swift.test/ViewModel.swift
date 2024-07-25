@@ -288,7 +288,6 @@ class Web3ViewModel: ObservableObject {
         }
         return try? await withCheckedThrowingContinuation { continuation in
             
-            
             self.web3.eth.getTransactionReceipt(transactionHash: ethereumData) { resp in
                 switch resp.status {
                 case .success(let receipt):

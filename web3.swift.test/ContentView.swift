@@ -96,6 +96,8 @@ struct ContentView: View {
             Button {
                 Task{
                     txHash = await viewModel.signAndSendTx(amount: 12345, toHex: otherAddress) ?? "Error"
+                    
+                    balance = await viewModel.getBalance(hex: otherAddress) ?? BigUInt()
                 }
             } label: {
                 Text("Sign & Send Tx")
